@@ -480,9 +480,6 @@ defmodule AWS.SSM do
   Retrieves the default patch baseline. Note that Systems Manager supports
   creating multiple default patch baselines. For example, you can create a
   default patch baseline for each operating system.
-
-  If you do not specify an operating system value, the default patch baseline
-  for Windows is returned.
   """
   def get_default_patch_baseline(client, input, options \\ []) do
     request(client, "GetDefaultPatchBaseline", input, options)
@@ -930,22 +927,22 @@ defmodule AWS.SSM do
   Modifies a task assigned to a Maintenance Window. You can't change the task
   type, but you can change the following values:
 
-  <ul> <li> TaskARN. For example, you can change a RUN_COMMAND task from
+  Task ARN. For example, you can change a RUN_COMMAND task from
   AWS-RunPowerShellScript to AWS-RunShellScript.
 
-  </li> <li> ServiceRoleArn
+  Service role ARN.
 
-  </li> <li> TaskInvocationParameters
+  Task parameters.
 
-  </li> <li> Priority
+  Task priority.
 
-  </li> <li> MaxConcurrency
+  Task MaxConcurrency and MaxErrors.
 
-  </li> <li> MaxErrors
+  Log location.
 
-  </li> </ul> If a parameter is null, then the corresponding field is not
-  modified. Also, if you set Replace to true, then all fields required by the
-  `RegisterTaskWithMaintenanceWindow` action are required for this request.
+  If a parameter is null, then the corresponding field is not modified. Also,
+  if you set Replace to true, then all fields required by the
+  RegisterTaskWithMaintenanceWindow action are required for this request.
   Optional fields that aren't specified are set to null.
   """
   def update_maintenance_window_task(client, input, options \\ []) do

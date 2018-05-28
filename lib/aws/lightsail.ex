@@ -36,9 +36,6 @@ defmodule AWS.Lightsail do
 
   @doc """
   Attaches one or more Lightsail instances to a load balancer.
-
-  After some time, the instances are attached to the load balancer and the
-  health check status is available.
   """
   def attach_instances_to_load_balancer(client, input, options \\ []) do
     request(client, "AttachInstancesToLoadBalancer", input, options)
@@ -46,14 +43,9 @@ defmodule AWS.Lightsail do
 
   @doc """
   Attaches a Transport Layer Security (TLS) certificate to your load
-  balancer. TLS is just an updated, more secure version of Secure Socket
-  Layer (SSL).
+  balancer.
 
-  Once you create and validate your certificate, you can attach it to your
-  load balancer. You can also use this API to rotate the certificates on your
-  account. Use the `AttachLoadBalancerTlsCertificate` operation with the
-  non-attached certificate, and it will replace the existing one and become
-  the attached certificate.
+  TLS is just an updated, more secure version of Secure Socket Layer (SSL).
   """
   def attach_load_balancer_tls_certificate(client, input, options \\ []) do
     request(client, "AttachLoadBalancerTlsCertificate", input, options)
@@ -162,15 +154,11 @@ defmodule AWS.Lightsail do
   end
 
   @doc """
-  Creates a Lightsail load balancer. To learn more about deciding whether to
-  load balance your application, see [Configure your Lightsail instances for
-  load
-  balancing](https://lightsail.aws.amazon.com/ls/docs/how-to/article/configure-lightsail-instances-for-load-balancing).
-  You can create up to 5 load balancers per AWS Region in your account.
+  Creates a Lightsail load balancer.
 
-  When you create a load balancer, you can specify a unique name and port
-  settings. To change additional load balancer settings, use the
-  `UpdateLoadBalancerAttribute` operation.
+  When you create a load balancer, you can specify certificates and port
+  settings. You can create up to 5 load balancers per AWS Region in your
+  account.
   """
   def create_load_balancer(client, input, options \\ []) do
     request(client, "CreateLoadBalancer", input, options)
@@ -247,17 +235,14 @@ defmodule AWS.Lightsail do
   end
 
   @doc """
-  Deletes a Lightsail load balancer and all its associated SSL/TLS
-  certificates. Once the load balancer is deleted, you will need to create a
-  new load balancer, create a new certificate, and verify domain ownership
-  again.
+  Deletes a Lightsail load balancer.
   """
   def delete_load_balancer(client, input, options \\ []) do
     request(client, "DeleteLoadBalancer", input, options)
   end
 
   @doc """
-  Deletes an SSL/TLS certificate associated with a Lightsail load balancer.
+  Deletes a TLS/SSL certificate associated with a Lightsail load balancer.
   """
   def delete_load_balancer_tls_certificate(client, input, options \\ []) do
     request(client, "DeleteLoadBalancerTlsCertificate", input, options)
@@ -274,9 +259,6 @@ defmodule AWS.Lightsail do
 
   @doc """
   Detaches the specified instances from a Lightsail load balancer.
-
-  This operation waits until the instances are no longer needed before they
-  are detached from the load balancer.
   """
   def detach_instances_from_load_balancer(client, input, options \\ []) do
     request(client, "DetachInstancesFromLoadBalancer", input, options)
@@ -469,9 +451,6 @@ defmodule AWS.Lightsail do
   specified Lightsail load balancer.
 
   TLS is just an updated, more secure version of Secure Socket Layer (SSL).
-
-  You can have a maximum of 2 certificates associated with a Lightsail load
-  balancer. One is active and the other is inactive.
   """
   def get_load_balancer_tls_certificates(client, input, options \\ []) do
     request(client, "GetLoadBalancerTlsCertificates", input, options)
@@ -621,8 +600,7 @@ defmodule AWS.Lightsail do
   end
 
   @doc """
-  Updates the specified attribute for a load balancer. You can only update
-  one attribute at a time.
+  Updates the specified attribute for a load balancer.
   """
   def update_load_balancer_attribute(client, input, options \\ []) do
     request(client, "UpdateLoadBalancerAttribute", input, options)

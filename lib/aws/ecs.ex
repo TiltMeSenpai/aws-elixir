@@ -562,21 +562,11 @@ defmodule AWS.ECS do
   definition in a service by specifying the cluster that the service is
   running in and a new `desiredCount` parameter.
 
-  If you have updated the Docker image of your application, you can create a
-  new task definition with that image and deploy it to your service. The
-  service scheduler uses the minimum healthy percent and maximum percent
-  parameters (in the service's deployment configuration) to determine the
-  deployment strategy.
+  You can use `UpdateService` to modify your task definition and deploy a new
+  version of your service.
 
-  <note> If your updated Docker image uses the same tag as what is in the
-  existing task definition for your service (for example, `my_image:latest`),
-  you do not need to create a new revision of your task definition. You can
-  update the service using the `forceNewDeployment` option. The new tasks
-  launched by the deployment pull the current image/tag combination from your
-  repository when they start.
-
-  </note> You can also update the deployment configuration of a service. When
-  a deployment is triggered by updating the task definition of a service, the
+  You can also update the deployment configuration of a service. When a
+  deployment is triggered by updating the task definition of a service, the
   service scheduler uses the deployment configuration parameters,
   `minimumHealthyPercent` and `maximumPercent`, to determine the deployment
   strategy.

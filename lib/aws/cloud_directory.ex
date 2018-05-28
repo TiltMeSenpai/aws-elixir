@@ -16,8 +16,7 @@ defmodule AWS.CloudDirectory do
   """
 
   @doc """
-  Adds a new `Facet` to an object. An object can have more than one facet
-  applied on it.
+  Adds a new `Facet` to an object.
   """
   def add_facet_to_object(client, input, options \\ []) do
     url = "/amazonclouddirectory/2017-01-11/object/facets"
@@ -429,23 +428,6 @@ defmodule AWS.CloudDirectory do
   end
 
   @doc """
-  Retrieves attributes within a facet that are associated with an object.
-  """
-  def get_object_attributes(client, input, options \\ []) do
-    url = "/amazonclouddirectory/2017-01-11/object/attributes/get"
-    headers = []
-    if Dict.has_key?(input, "ConsistencyLevel") do
-      headers = [{"x-amz-consistency-level", input["ConsistencyLevel"]}|headers]
-      input = Dict.delete(input, "ConsistencyLevel")
-    end
-    if Dict.has_key?(input, "DirectoryArn") do
-      headers = [{"x-amz-data-partition", input["DirectoryArn"]}|headers]
-      input = Dict.delete(input, "DirectoryArn")
-    end
-    request(client, :post, url, headers, input, options, 200)
-  end
-
-  @doc """
   Retrieves metadata about an object.
   """
   def get_object_information(client, input, options \\ []) do
@@ -581,7 +563,7 @@ defmodule AWS.CloudDirectory do
   end
 
   @doc """
-  Lists objects attached to the specified index.
+  Lists objects and indexed values attached to the index.
   """
   def list_index(client, input, options \\ []) do
     url = "/amazonclouddirectory/2017-01-11/index/targets"
@@ -725,9 +707,8 @@ defmodule AWS.CloudDirectory do
   end
 
   @doc """
-  Lists the major version families of each published schema. If a major
-  version ARN is provided as `SchemaArn`, the minor version revisions in that
-  family are listed instead.
+  Lists schema major versions for a published schema. If `SchemaArn` is
+  provided, lists the minor version.
   """
   def list_published_schema_arns(client, input, options \\ []) do
     url = "/amazonclouddirectory/2017-01-11/schema/published"
@@ -952,7 +933,10 @@ defmodule AWS.CloudDirectory do
                           headers)
     payload = encode_payload(input)
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
-    perform_request(method, url, payload, headers, options, success_status_code)
+    case perform_request(method, url, payload, headers, options, success_status_code) do
+      {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      other -> other
+    end
   end
 
   defp perform_request(method, url, payload, headers, options, nil) do

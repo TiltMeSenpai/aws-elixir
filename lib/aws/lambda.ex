@@ -12,7 +12,7 @@ defmodule AWS.Lambda do
   Lambda](http://docs.aws.amazon.com/lambda/latest/dg/welcome.html), and for
   information about how the service works, see [AWS Lambda: How it
   Works](http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html)
-  in the **AWS Lambda Developer Guide**.
+  in the *AWS Lambda Developer Guide*.
   """
 
   @doc """
@@ -23,8 +23,8 @@ defmodule AWS.Lambda do
   permission you add to the resource policy allows an event source,
   permission to invoke the Lambda function.
 
-  For information about the push model, see [Lambda
-  Functions](http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html).
+  For information about the push model, see [AWS Lambda: How it
+  Works](http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html).
 
   If you are using versioning, the permissions you add are specific to the
   Lambda function version or alias you specify in the `AddPermission` request
@@ -62,11 +62,17 @@ defmodule AWS.Lambda do
   This association between a stream source and a Lambda function is called
   the event source mapping.
 
-  You provide mapping information (for example, which stream to read from and
-  which Lambda function to invoke) in the request body.
+  <important> This event source mapping is relevant only in the AWS Lambda
+  pull model, where AWS Lambda invokes the function. For more information,
+  see [AWS Lambda: How it
+  Works](http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html)
+  in the *AWS Lambda Developer Guide*.
+
+  </important> You provide mapping information (for example, which stream to
+  read from and which Lambda function to invoke) in the request body.
 
   Each event source, such as an Amazon Kinesis or a DynamoDB stream, can be
-  associated with multiple AWS Lambda functions. A given Lambda function can
+  associated with multiple AWS Lambda function. A given Lambda function can
   be associated with multiple AWS event sources.
 
   If you are using versioning, you can specify a specific function version or
@@ -398,9 +404,7 @@ defmodule AWS.Lambda do
 
   @doc """
   Returns a list of tags assigned to a function when supplied the function
-  ARN (Amazon Resource Name). For more information on Tagging, see [Tagging
-  Lambda Functions](http://docs.aws.amazon.com/lambda/latest/dg/tagging.html)
-  in the **AWS Lambda Developer Guide**.
+  ARN (Amazon Resource Name).
   """
   def list_tags(client, resource, options \\ []) do
     url = "/2017-03-31/tags/#{URI.encode(resource)}"
@@ -474,9 +478,7 @@ defmodule AWS.Lambda do
   Creates a list of tags (key-value pairs) on the Lambda function. Requires
   the Lambda function ARN (Amazon Resource Name). If a key is specified
   without a value, Lambda creates a tag with the specified key and a value of
-  null. For more information, see [Tagging Lambda
-  Functions](http://docs.aws.amazon.com/lambda/latest/dg/tagging.html) in the
-  **AWS Lambda Developer Guide**.
+  null.
   """
   def tag_resource(client, resource, input, options \\ []) do
     url = "/2017-03-31/tags/#{URI.encode(resource)}"
@@ -486,9 +488,7 @@ defmodule AWS.Lambda do
 
   @doc """
   Removes tags from a Lambda function. Requires the function ARN (Amazon
-  Resource Name). For more information, see [Tagging Lambda
-  Functions](http://docs.aws.amazon.com/lambda/latest/dg/tagging.html) in the
-  **AWS Lambda Developer Guide**.
+  Resource Name).
   """
   def untag_resource(client, resource, input, options \\ []) do
     url = "/2017-03-31/tags/#{URI.encode(resource)}"
@@ -584,7 +584,10 @@ defmodule AWS.Lambda do
                           headers)
     payload = encode_payload(input)
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
-    perform_request(method, url, payload, headers, options, success_status_code)
+    case perform_request(method, url, payload, headers, options, success_status_code) do
+      {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      other -> other
+    end
   end
 
   defp perform_request(method, url, payload, headers, options, nil) do

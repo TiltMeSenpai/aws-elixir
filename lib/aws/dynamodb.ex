@@ -158,9 +158,6 @@ defmodule AWS.DynamoDB do
   same `BatchWriteItem` request. For example, you cannot put and delete the
   same item in the same `BatchWriteItem` request.
 
-  </li> <li> Your request contains at least two items with identical hash and
-  range keys (which essentially is two put operations).
-
   </li> <li> There are more than 25 requests in the batch.
 
   </li> <li> Any individual item in a batch exceeds 400 KB.
@@ -325,18 +322,8 @@ defmodule AWS.DynamoDB do
   end
 
   @doc """
-  Checks the status of continuous backups and point in time recovery on the
-  specified table. Continuous backups are `ENABLED` on all tables at table
-  creation. If point in time recovery is enabled, `PointInTimeRecoveryStatus`
-  will be set to ENABLED.
-
-  Once continuous backups and point in time recovery are enabled, you can
-  restore to any point in time within `EarliestRestorableDateTime` and
-  `LatestRestorableDateTime`.
-
-  `LatestRestorableDateTime` is typically 5 minutes before the current time.
-  You can restore your table to any point in time during the last 35 days
-  with a 1-minute granularity.
+  Checks the status of the backup restore settings on the specified table. If
+  backups are enabled, `ContinuousBackupsStatus` will bet set to ENABLED.
 
   You can call `DescribeContinuousBackups` at a maximum rate of 10 times per
   second.
@@ -628,8 +615,7 @@ defmodule AWS.DynamoDB do
 
   @doc """
   Creates a new table from an existing backup. Any number of users can
-  execute up to 4 concurrent restores (any type of restore) in a given
-  account.
+  execute up to 10 concurrent restores in a given account.
 
   You can call `RestoreTableFromBackup` at a maximum rate of 10 times per
   second.
@@ -652,35 +638,6 @@ defmodule AWS.DynamoDB do
   """
   def restore_table_from_backup(client, input, options \\ []) do
     request(client, "RestoreTableFromBackup", input, options)
-  end
-
-  @doc """
-  Restores the specified table to the specified point in time within
-  `EarliestRestorableDateTime` and `LatestRestorableDateTime`. You can
-  restore your table to any point in time during the last 35 days with a
-  1-minute granularity. Any number of users can execute up to 4 concurrent
-  restores (any type of restore) in a given account.
-
-  You must manually set up the following on the restored table:
-
-  <ul> <li> Auto scaling policies
-
-  </li> <li> IAM policies
-
-  </li> <li> Cloudwatch metrics and alarms
-
-  </li> <li> Tags
-
-  </li> <li> Stream settings
-
-  </li> <li> Time to Live (TTL) settings
-
-  </li> <li> Point in time recovery settings
-
-  </li> </ul>
-  """
-  def restore_table_to_point_in_time(client, input, options \\ []) do
-    request(client, "RestoreTableToPointInTime", input, options)
   end
 
   @doc """
@@ -746,29 +703,11 @@ defmodule AWS.DynamoDB do
   end
 
   @doc """
-  `UpdateContinuousBackups` enables or disables point in time recovery for
-  the specified table. A successful `UpdateContinuousBackups` call returns
-  the current `ContinuousBackupsDescription`. Continuous backups are
-  `ENABLED` on all tables at table creation. If point in time recovery is
-  enabled, `PointInTimeRecoveryStatus` will be set to ENABLED.
-
-  Once continuous backups and point in time recovery are enabled, you can
-  restore to any point in time within `EarliestRestorableDateTime` and
-  `LatestRestorableDateTime`.
-
-  `LatestRestorableDateTime` is typically 5 minutes before the current time.
-  You can restore your table to any point in time during the last 35 days
-  with a 1-minute granularity.
-  """
-  def update_continuous_backups(client, input, options \\ []) do
-    request(client, "UpdateContinuousBackups", input, options)
-  end
-
-  @doc """
   Adds or removes replicas in the specified global table. The global table
   must already exist to be able to use this operation. Any replica to be
   added must be empty, must have the same name as the global table, must have
-  the same key schema, and must have DynamoDB Streams enabled.
+  the same key schema, must have DynamoDB Streams enabled, and cannot have
+  any local secondary indexes (LSIs).
 
   <note> Although you can use `UpdateGlobalTable` to add replicas and remove
   replicas in a single request, for simplicity we recommend that you issue

@@ -16,14 +16,6 @@ defmodule AWS.DeviceFarm do
   end
 
   @doc """
-  Creates a profile that can be applied to one or more private fleet device
-  instances.
-  """
-  def create_instance_profile(client, input, options \\ []) do
-    request(client, "CreateInstanceProfile", input, options)
-  end
-
-  @doc """
   Creates a network profile.
   """
   def create_network_profile(client, input, options \\ []) do
@@ -57,14 +49,6 @@ defmodule AWS.DeviceFarm do
   """
   def delete_device_pool(client, input, options \\ []) do
     request(client, "DeleteDevicePool", input, options)
-  end
-
-  @doc """
-  Deletes a profile that can be applied to one or more private device
-  instances.
-  """
-  def delete_instance_profile(client, input, options \\ []) do
-    request(client, "DeleteInstanceProfile", input, options)
   end
 
   @doc """
@@ -122,14 +106,6 @@ defmodule AWS.DeviceFarm do
   end
 
   @doc """
-  Returns information about a device instance belonging to a private device
-  fleet.
-  """
-  def get_device_instance(client, input, options \\ []) do
-    request(client, "GetDeviceInstance", input, options)
-  end
-
-  @doc """
   Gets information about a device pool.
   """
   def get_device_pool(client, input, options \\ []) do
@@ -141,13 +117,6 @@ defmodule AWS.DeviceFarm do
   """
   def get_device_pool_compatibility(client, input, options \\ []) do
     request(client, "GetDevicePoolCompatibility", input, options)
-  end
-
-  @doc """
-  Returns information about the specified instance profile.
-  """
-  def get_instance_profile(client, input, options \\ []) do
-    request(client, "GetInstanceProfile", input, options)
   end
 
   @doc """
@@ -236,14 +205,6 @@ defmodule AWS.DeviceFarm do
   end
 
   @doc """
-  Returns information about the private device instances associated with one
-  or more AWS accounts.
-  """
-  def list_device_instances(client, input, options \\ []) do
-    request(client, "ListDeviceInstances", input, options)
-  end
-
-  @doc """
   Gets information about device pools.
   """
   def list_device_pools(client, input, options \\ []) do
@@ -255,13 +216,6 @@ defmodule AWS.DeviceFarm do
   """
   def list_devices(client, input, options \\ []) do
     request(client, "ListDevices", input, options)
-  end
-
-  @doc """
-  Returns information about all the instance profiles in an AWS account.
-  """
-  def list_instance_profiles(client, input, options \\ []) do
-    request(client, "ListInstanceProfiles", input, options)
   end
 
   @doc """
@@ -423,26 +377,12 @@ defmodule AWS.DeviceFarm do
   end
 
   @doc """
-  Updates information about an existing private device instance.
-  """
-  def update_device_instance(client, input, options \\ []) do
-    request(client, "UpdateDeviceInstance", input, options)
-  end
-
-  @doc """
   Modifies the name, description, and rules in a device pool given the
   attributes and the pool ARN. Rule updates are all-or-nothing, meaning they
   can only be updated as a whole (or not at all).
   """
   def update_device_pool(client, input, options \\ []) do
     request(client, "UpdateDevicePool", input, options)
-  end
-
-  @doc """
-  Updates information about an existing private device instance profile.
-  """
-  def update_instance_profile(client, input, options \\ []) do
-    request(client, "UpdateInstanceProfile", input, options)
   end
 
   @doc """

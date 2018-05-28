@@ -377,8 +377,10 @@ defmodule AWS.MechanicalTurk do
   end
 
   @doc """
-  The `ListQualificationTypes` operation returns a list of Qualification
-  types, filtered by an optional search term.
+  The `ListQualificationRequests` operation retrieves requests for
+  Qualifications of a particular Qualification type. The owner of the
+  Qualification type calls this operation to poll for pending requests, and
+  accepts them using the AcceptQualification operation.
   """
   def list_qualification_types(client, input, options \\ []) do
     request(client, "ListQualificationTypes", input, options)

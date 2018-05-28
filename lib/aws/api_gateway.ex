@@ -761,7 +761,7 @@ defmodule AWS.APIGateway do
   end
 
   @doc """
-  Gets the `Tags` collection for a given resource.
+  Gets the Tags collection for a given resource.
   """
   def get_tags(client, resource_arn, options \\ []) do
     url = "/tags/#{URI.encode(resource_arn)}"
@@ -921,7 +921,7 @@ defmodule AWS.APIGateway do
   end
 
   @doc """
-  Adds or updates a tag on a given resource.
+  Adds or updates Tags on a gievn resource.
   """
   def tag_resource(client, resource_arn, input, options \\ []) do
     url = "/tags/#{URI.encode(resource_arn)}"
@@ -954,7 +954,7 @@ defmodule AWS.APIGateway do
   end
 
   @doc """
-  Removes a tag from a given resource.
+  Removes Tags from a given resource.
   """
   def untag_resource(client, resource_arn, input, options \\ []) do
     url = "/tags/#{URI.encode(resource_arn)}"
@@ -1174,7 +1174,10 @@ defmodule AWS.APIGateway do
                           headers)
     payload = encode_payload(input)
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
-    perform_request(method, url, payload, headers, options, success_status_code)
+    case perform_request(method, url, payload, headers, options, success_status_code) do
+      {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      other -> other
+    end
   end
 
   defp perform_request(method, url, payload, headers, options, nil) do

@@ -10,11 +10,11 @@ defmodule AWS.CertificateManager do
   You can use ACM to manage SSL/TLS certificates for your AWS-based websites
   and applications. For general information about using ACM, see the [ *AWS
   Certificate Manager User Guide*
-  ](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/).
+  ](http://docs.aws.amazon.com/acm/latest/userguide/).
   """
 
   @doc """
-  Adds one or more tags to an ACM certificate. Tags are labels that you can
+  Adds one or more tags to an ACM Certificate. Tags are labels that you can
   use to identify and organize your AWS resources. Each tag consists of a
   `key` and an optional `value`. You specify the certificate on input by its
   Amazon Resource Name (ARN). You specify the tag by using a key-value pair.
@@ -24,10 +24,10 @@ defmodule AWS.CertificateManager do
   to multiple certificates if you want to filter for a common relationship
   among those certificates. Similarly, you can apply the same tag to multiple
   resources if you want to specify a relationship among those resources. For
-  example, you can add the same tag to an ACM certificate and an Elastic Load
+  example, you can add the same tag to an ACM Certificate and an Elastic Load
   Balancing load balancer to indicate that they are both used by the same
   website. For more information, see [Tagging ACM
-  certificates](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/tags.html).
+  Certificates](http://docs.aws.amazon.com/acm/latest/userguide/tags.html).
 
   To remove one or more tags, use the `RemoveTagsFromCertificate` action. To
   view all of the tags that have been applied to the certificate, use the
@@ -44,7 +44,7 @@ defmodule AWS.CertificateManager do
   calling the `GetCertificate` action. The certificate will not be available
   for use by AWS services integrated with ACM.
 
-  <note> You cannot delete an ACM certificate that is being used by another
+  <note> You cannot delete an ACM Certificate that is being used by another
   AWS service. To delete a certificate that is in use, the certificate
   association must first be removed.
 
@@ -55,24 +55,10 @@ defmodule AWS.CertificateManager do
   end
 
   @doc """
-  Returns detailed metadata about the specified ACM certificate.
+  Returns detailed metadata about the specified ACM Certificate.
   """
   def describe_certificate(client, input, options \\ []) do
     request(client, "DescribeCertificate", input, options)
-  end
-
-  @doc """
-  Exports a certificate for use anywhere. You can export the certificate, the
-  certificate chain, and the encrypted private key associated with the public
-  key embedded in the certificate. You must store the private key securely.
-  The private key is a 2048 bit RSA key. You must provide a passphrase for
-  the private key when exporting it. You can use the following OpenSSL
-  command to decrypt it later. Provide the passphrase when prompted.
-
-  `openssl rsa -in encrypted_key.pem -out decrypted_key.pem`
-  """
-  def export_certificate(client, input, options \\ []) do
-    request(client, "ExportCertificate", input, options)
   end
 
   @doc """
@@ -90,17 +76,17 @@ defmodule AWS.CertificateManager do
   @doc """
   Imports a certificate into AWS Certificate Manager (ACM) to use with
   services that are integrated with ACM. Note that [integrated
-  services](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/acm-services.html)
+  services](http://docs.aws.amazon.com/acm/latest/userguide/acm-services.html)
   allow only certificate types and keys they support to be associated with
   their resources. Further, their support differs depending on whether the
   certificate is imported into IAM or into ACM. For more information, see the
   documentation for each service. For more information about importing
   certificates into ACM, see [Importing
-  Certificates](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/import-certificate.html)
+  Certificates](http://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html)
   in the *AWS Certificate Manager User Guide*.
 
   <note> ACM does not provide [managed
-  renewal](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/acm-renewal.html)
+  renewal](http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html)
   for certificates that you import.
 
   </note> Note the following guidelines when importing third party
@@ -158,9 +144,9 @@ defmodule AWS.CertificateManager do
   end
 
   @doc """
-  Lists the tags that have been applied to the ACM certificate. Use the
+  Lists the tags that have been applied to the ACM Certificate. Use the
   certificate's Amazon Resource Name (ARN) to specify the certificate. To add
-  a tag to an ACM certificate, use the `AddTagsToCertificate` action. To
+  a tag to an ACM Certificate, use the `AddTagsToCertificate` action. To
   delete a tag, use the `RemoveTagsFromCertificate` action.
   """
   def list_tags_for_certificate(client, input, options \\ []) do
@@ -168,14 +154,14 @@ defmodule AWS.CertificateManager do
   end
 
   @doc """
-  Remove one or more tags from an ACM certificate. A tag consists of a
+  Remove one or more tags from an ACM Certificate. A tag consists of a
   key-value pair. If you do not specify the value portion of the tag when
   calling this function, the tag will be removed regardless of value. If you
   specify a value, the tag is removed only if it is associated with the
   specified value.
 
   To add tags to a certificate, use the `AddTagsToCertificate` action. To
-  view all of the tags that have been applied to a specific ACM certificate,
+  view all of the tags that have been applied to a specific ACM Certificate,
   use the `ListTagsForCertificate` action.
   """
   def remove_tags_from_certificate(client, input, options \\ []) do
@@ -183,28 +169,23 @@ defmodule AWS.CertificateManager do
   end
 
   @doc """
-  Requests an ACM certificate for use with other AWS services. To request an
-  ACM certificate, you must specify the fully qualified domain name (FQDN)
+  Requests an ACM Certificate for use with other AWS services. To request an
+  ACM Certificate, you must specify the fully qualified domain name (FQDN)
   for your site in the `DomainName` parameter. You can also specify
-  additional FQDNs in the `SubjectAlternativeNames` parameter.
+  additional FQDNs in the `SubjectAlternativeNames` parameter if users can
+  reach your site by using other names.
 
-  Each domain name that you specify must be validated to verify that you own
-  or control the domain. You can use [DNS
-  validation](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/gs-acm-validate-dns.html)
-  or [email
-  validation](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/gs-acm-validate-email.html).
-  We recommend that you use DNS validation.
-
-  If you choose email validation, email is sent to the domain owner to
+  For each domain name you specify, email is sent to the domain owner to
   request approval to issue the certificate. Email is sent to three
   registered contact addresses in the WHOIS database and to five common
   system administration addresses formed from the `DomainName` you enter or
   the optional `ValidationDomain` parameter. For more information, see
-  [Validate with
-  Email](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/gs-acm-validate-email.html).
+  [Validate Domain
+  Ownership](http://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate.html).
 
-  After receiving approval from the domain owner, the ACM certificate is
-  issued.
+  After receiving approval from the domain owner, the ACM Certificate is
+  issued. For more information, see the [AWS Certificate Manager User
+  Guide](http://docs.aws.amazon.com/acm/latest/userguide/).
   """
   def request_certificate(client, input, options \\ []) do
     request(client, "RequestCertificate", input, options)
@@ -212,31 +193,20 @@ defmodule AWS.CertificateManager do
 
   @doc """
   Resends the email that requests domain ownership validation. The domain
-  owner or an authorized representative must approve the ACM certificate
+  owner or an authorized representative must approve the ACM Certificate
   before it can be issued. The certificate can be approved by clicking a link
   in the mail to navigate to the Amazon certificate approval website and then
   clicking **I Approve**. However, the validation email can be blocked by
   spam filters. Therefore, if you do not receive the original mail, you can
   request that the mail be resent within 72 hours of requesting the ACM
-  certificate. If more than 72 hours have elapsed since your original request
+  Certificate. If more than 72 hours have elapsed since your original request
   or since your last attempt to resend validation mail, you must request a
   new certificate. For more information about setting up your contact email
   addresses, see [Configure Email for your
-  Domain](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/setup-email.html).
+  Domain](http://docs.aws.amazon.com/acm/latest/userguide/setup-email.html).
   """
   def resend_validation_email(client, input, options \\ []) do
     request(client, "ResendValidationEmail", input, options)
-  end
-
-  @doc """
-  Updates a certificate. Currently, you can use this function to specify
-  whether to opt in to or out of recording your certificate in a certificate
-  transparency log. For more information, see [ Opting Out of Certificate
-  Transparency
-  Logging](http://docs.aws.amazon.com/http:/docs.aws.amazon.comacm/latest/userguide/acm-bestpractices.html#best-practices-transparency).
-  """
-  def update_certificate_options(client, input, options \\ []) do
-    request(client, "UpdateCertificateOptions", input, options)
   end
 
   @spec request(map(), binary(), map(), list()) ::

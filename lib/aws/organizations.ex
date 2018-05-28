@@ -432,12 +432,6 @@ defmodule AWS.Organizations do
   belongs to.
 
   This operation can be called from any account in the organization.
-
-  <note> Even if a policy type is shown as available in the organization, it
-  can be disabled separately at the root level with `DisablePolicyType`. Use
-  `ListRoots` to see the status of policy types for a specified root.
-
-  </note>
   """
   def describe_organization(client, input, options \\ []) do
     request(client, "DescribeOrganization", input, options)
@@ -527,14 +521,6 @@ defmodule AWS.Organizations do
   in that root. You can undo this by using the `EnablePolicyType` operation.
 
   This operation can be called only from the organization's master account.
-
-  <note> If you disable a policy type for a root, it still shows as enabled
-  for the organization if all features are enabled in that organization. Use
-  `ListRoots` to see the status of policy types for a specified root. Use
-  `DescribeOrganization` to see the status of policy types in the
-  organization.
-
-  </note>
   """
   def disable_policy_type(client, input, options \\ []) do
     request(client, "DisablePolicyType", input, options)
@@ -587,14 +573,9 @@ defmodule AWS.Organizations do
   the additional features enabled only after all administrators in the
   invited accounts approve the change by accepting the handshake.
 
-  </important> After you enable all features, you can separately enable or
-  disable individual policy types in a root using `EnablePolicyType` and
-  `DisablePolicyType`. To see the status of policy types in a root, use
-  `ListRoots`.
-
-  After all invited member accounts accept the handshake, you finalize the
-  feature set change by accepting the handshake that contains `"Action":
-  "ENABLE_ALL_FEATURES"`. This completes the change.
+  </important> After all invited member accounts accept the handshake, you
+  finalize the feature set change by accepting the handshake that contains
+  `"Action": "ENABLE_ALL_FEATURES"`. This completes the change.
 
   After you enable all features in your organization, the master account in
   the organization can apply policies on all member accounts. These policies
@@ -615,12 +596,6 @@ defmodule AWS.Organizations do
   that root. You can undo this by using the `DisablePolicyType` operation.
 
   This operation can be called only from the organization's master account.
-
-  You can enable a policy type in a root only if that policy type is
-  available in the organization. Use `DescribeOrganization` to view the
-  status of available policy types in the organization.
-
-  To view the status of policy type in a root, use `ListRoots`.
   """
   def enable_policy_type(client, input, options \\ []) do
     request(client, "EnablePolicyType", input, options)
@@ -715,16 +690,9 @@ defmodule AWS.Organizations do
 
   @doc """
   Lists all the accounts in the organization. To request only the accounts in
-  a specified root or OU, use the `ListAccountsForParent` operation instead.
+  a root or OU, use the `ListAccountsForParent` operation instead.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_accounts(client, input, options \\ []) do
     request(client, "ListAccounts", input, options)
@@ -738,14 +706,7 @@ defmodule AWS.Organizations do
   To get a list of all accounts in the organization, use the `ListAccounts`
   operation.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_accounts_for_parent(client, input, options \\ []) do
     request(client, "ListAccountsForParent", input, options)
@@ -756,14 +717,7 @@ defmodule AWS.Organizations do
   OU or root. This operation, along with `ListParents` enables you to
   traverse the tree structure that makes up this root.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_children(client, input, options \\ []) do
     request(client, "ListChildren", input, options)
@@ -773,14 +727,7 @@ defmodule AWS.Organizations do
   Lists the account creation requests that match the specified status that is
   currently being tracked for the organization.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_create_account_status(client, input, options \\ []) do
     request(client, "ListCreateAccountStatus", input, options)
@@ -794,13 +741,7 @@ defmodule AWS.Organizations do
   of this API for only 30 days after changing to that state. After that they
   are deleted and no longer accessible.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called from any account in the organization.
+  This operation can be called from any account in the organization.
   """
   def list_handshakes_for_account(client, input, options \\ []) do
     request(client, "ListHandshakesForAccount", input, options)
@@ -816,14 +757,7 @@ defmodule AWS.Organizations do
   of this API for only 30 days after changing to that state. After that they
   are deleted and no longer accessible.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_handshakes_for_organization(client, input, options \\ []) do
     request(client, "ListHandshakesForOrganization", input, options)
@@ -833,14 +767,7 @@ defmodule AWS.Organizations do
   Lists the organizational units (OUs) in a parent organizational unit or
   root.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_organizational_units_for_parent(client, input, options \\ []) do
     request(client, "ListOrganizationalUnitsForParent", input, options)
@@ -852,14 +779,7 @@ defmodule AWS.Organizations do
   `ListChildren` enables you to traverse the tree structure that makes up
   this root.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
 
   <note> In the current release, a child can have only a single parent.
 
@@ -872,14 +792,7 @@ defmodule AWS.Organizations do
   @doc """
   Retrieves the list of all policies in an organization of a specified type.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_policies(client, input, options \\ []) do
     request(client, "ListPolicies", input, options)
@@ -890,14 +803,7 @@ defmodule AWS.Organizations do
   organizational unit (OU), or account. You must specify the policy type that
   you want included in the returned list.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_policies_for_target(client, input, options \\ []) do
     request(client, "ListPoliciesForTarget", input, options)
@@ -906,23 +812,7 @@ defmodule AWS.Organizations do
   @doc """
   Lists the roots that are defined in the current organization.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
-
-  <note> Policy types can be enabled and disabled in roots. This is distinct
-  from whether they are available in the organization. When you enable all
-  features, you make policy types available for use in that organization.
-  Individual policy types can then be enabled and disabled in a root. To see
-  the availability of a policy type in an organization, use
-  `DescribeOrganization`.
-
-  </note>
+  This operation can be called only from the organization's master account.
   """
   def list_roots(client, input, options \\ []) do
     request(client, "ListRoots", input, options)
@@ -932,14 +822,7 @@ defmodule AWS.Organizations do
   Lists all the roots, OUs, and accounts to which the specified policy is
   attached.
 
-  <note> Always check the `NextToken` response parameter for a `null` value
-  when calling a `List*` operation. These operations can occasionally return
-  an empty set of results even when there are more results available. The
-  `NextToken` response parameter value is `null` *only* when there are no
-  more results to display.
-
-  </note> This operation can be called only from the organization's master
-  account.
+  This operation can be called only from the organization's master account.
   """
   def list_targets_for_policy(client, input, options \\ []) do
     request(client, "ListTargetsForPolicy", input, options)

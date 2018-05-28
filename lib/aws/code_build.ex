@@ -36,8 +36,6 @@ defmodule AWS.CodeBuild do
   CodeBuild to begin automatically rebuilding the source code every time a
   code change is pushed to the repository.
 
-  </li> <li> `UpdateWebhook`: Changes the settings of an existing webhook.
-
   </li> <li> `DeleteProject`: Deletes a build project.
 
   </li> <li> `DeleteWebhook`: For an existing AWS CodeBuild build project
@@ -191,13 +189,6 @@ defmodule AWS.CodeBuild do
   """
   def update_project(client, input, options \\ []) do
     request(client, "UpdateProject", input, options)
-  end
-
-  @doc """
-  Updates the webhook associated with an AWS CodeBuild build project.
-  """
-  def update_webhook(client, input, options \\ []) do
-    request(client, "UpdateWebhook", input, options)
   end
 
   @spec request(map(), binary(), map(), list()) ::

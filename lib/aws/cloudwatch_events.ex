@@ -186,7 +186,7 @@ defmodule AWS.CloudWatch.Events do
 
   </li> <li> Amazon SNS topics
 
-  </li> <li> Amazon SQS queues, including FIFO queues
+  </li> <li> Amazon SQS queues
 
   </li> <li> The default event bus of another AWS account
 
