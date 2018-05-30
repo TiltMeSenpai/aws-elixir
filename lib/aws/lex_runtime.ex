@@ -98,31 +98,31 @@ defmodule AWS.LexRuntime do
     case request(client, :post, url, headers, input, options, nil) do
       {:ok, body, response} ->
         if !is_nil(response.headers["Content-Type"]) do
-          body = %{body | "contentType" => response.headers["Content-Type"]}
+          body = Map.put(body, "contentType", response.headers["Content-Type"])
         end
         if !is_nil(response.headers["x-amz-lex-dialog-state"]) do
-          body = %{body | "dialogState" => response.headers["x-amz-lex-dialog-state"]}
+          body = Map.put(body, "dialogState", response.headers["x-amz-lex-dialog-state"])
         end
         if !is_nil(response.headers["x-amz-lex-input-transcript"]) do
-          body = %{body | "inputTranscript" => response.headers["x-amz-lex-input-transcript"]}
+          body = Map.put(body, "inputTranscript", response.headers["x-amz-lex-input-transcript"])
         end
         if !is_nil(response.headers["x-amz-lex-intent-name"]) do
-          body = %{body | "intentName" => response.headers["x-amz-lex-intent-name"]}
+          body = Map.put(body, "intentName", response.headers["x-amz-lex-intent-name"])
         end
         if !is_nil(response.headers["x-amz-lex-message"]) do
-          body = %{body | "message" => response.headers["x-amz-lex-message"]}
+          body = Map.put(body, "message", response.headers["x-amz-lex-message"])
         end
         if !is_nil(response.headers["x-amz-lex-message-format"]) do
-          body = %{body | "messageFormat" => response.headers["x-amz-lex-message-format"]}
+          body = Map.put(body, "messageFormat", response.headers["x-amz-lex-message-format"])
         end
         if !is_nil(response.headers["x-amz-lex-session-attributes"]) do
-          body = %{body | "sessionAttributes" => response.headers["x-amz-lex-session-attributes"]}
+          body = Map.put(body, "sessionAttributes", response.headers["x-amz-lex-session-attributes"])
         end
         if !is_nil(response.headers["x-amz-lex-slot-to-elicit"]) do
-          body = %{body | "slotToElicit" => response.headers["x-amz-lex-slot-to-elicit"]}
+          body = Map.put(body, "slotToElicit", response.headers["x-amz-lex-slot-to-elicit"])
         end
         if !is_nil(response.headers["x-amz-lex-slots"]) do
-          body = %{body | "slots" => response.headers["x-amz-lex-slots"]}
+          body = Map.put(body, "slots", response.headers["x-amz-lex-slots"])
         end
         {:ok, body, response}
       result ->
@@ -202,6 +202,7 @@ defmodule AWS.LexRuntime do
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
     case perform_request(method, url, payload, headers, options, success_status_code) do
       {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      {:ok, body, resp} -> {:ok, body, %{resp | headers: resp.headers |> Map.new}}
       other -> other
     end
   end

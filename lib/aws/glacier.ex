@@ -179,13 +179,13 @@ defmodule AWS.Glacier do
     case request(client, :post, url, headers, input, options, 201) do
       {:ok, body, response} ->
         if !is_nil(response.headers["x-amz-archive-id"]) do
-          body = %{body | "archiveId" => response.headers["x-amz-archive-id"]}
+          body = Map.put(body, "archiveId", response.headers["x-amz-archive-id"])
         end
         if !is_nil(response.headers["x-amz-sha256-tree-hash"]) do
-          body = %{body | "checksum" => response.headers["x-amz-sha256-tree-hash"]}
+          body = Map.put(body, "checksum", response.headers["x-amz-sha256-tree-hash"])
         end
         if !is_nil(response.headers["Location"]) do
-          body = %{body | "location" => response.headers["Location"]}
+          body = Map.put(body, "location", response.headers["Location"])
         end
         {:ok, body, response}
       result ->
@@ -252,7 +252,7 @@ defmodule AWS.Glacier do
     case request(client, :put, url, headers, input, options, 201) do
       {:ok, body, response} ->
         if !is_nil(response.headers["Location"]) do
-          body = %{body | "location" => response.headers["Location"]}
+          body = Map.put(body, "location", response.headers["Location"])
         end
         {:ok, body, response}
       result ->
@@ -515,19 +515,19 @@ defmodule AWS.Glacier do
     case request(client, :get, url, headers, nil, options, nil) do
       {:ok, body, response} ->
         if !is_nil(response.headers["Accept-Ranges"]) do
-          body = %{body | "acceptRanges" => response.headers["Accept-Ranges"]}
+          body = Map.put(body, "acceptRanges", response.headers["Accept-Ranges"])
         end
         if !is_nil(response.headers["x-amz-archive-description"]) do
-          body = %{body | "archiveDescription" => response.headers["x-amz-archive-description"]}
+          body = Map.put(body, "archiveDescription", response.headers["x-amz-archive-description"])
         end
         if !is_nil(response.headers["x-amz-sha256-tree-hash"]) do
-          body = %{body | "checksum" => response.headers["x-amz-sha256-tree-hash"]}
+          body = Map.put(body, "checksum", response.headers["x-amz-sha256-tree-hash"])
         end
         if !is_nil(response.headers["Content-Range"]) do
-          body = %{body | "contentRange" => response.headers["Content-Range"]}
+          body = Map.put(body, "contentRange", response.headers["Content-Range"])
         end
         if !is_nil(response.headers["Content-Type"]) do
-          body = %{body | "contentType" => response.headers["Content-Type"]}
+          body = Map.put(body, "contentType", response.headers["Content-Type"])
         end
         {:ok, body, response}
       result ->
@@ -627,13 +627,13 @@ defmodule AWS.Glacier do
     case request(client, :post, url, headers, input, options, 202) do
       {:ok, body, response} ->
         if !is_nil(response.headers["x-amz-job-id"]) do
-          body = %{body | "jobId" => response.headers["x-amz-job-id"]}
+          body = Map.put(body, "jobId", response.headers["x-amz-job-id"])
         end
         if !is_nil(response.headers["x-amz-job-output-path"]) do
-          body = %{body | "jobOutputPath" => response.headers["x-amz-job-output-path"]}
+          body = Map.put(body, "jobOutputPath", response.headers["x-amz-job-output-path"])
         end
         if !is_nil(response.headers["Location"]) do
-          body = %{body | "location" => response.headers["Location"]}
+          body = Map.put(body, "location", response.headers["Location"])
         end
         {:ok, body, response}
       result ->
@@ -696,10 +696,10 @@ defmodule AWS.Glacier do
     case request(client, :post, url, headers, input, options, 201) do
       {:ok, body, response} ->
         if !is_nil(response.headers["Location"]) do
-          body = %{body | "location" => response.headers["Location"]}
+          body = Map.put(body, "location", response.headers["Location"])
         end
         if !is_nil(response.headers["x-amz-multipart-upload-id"]) do
-          body = %{body | "uploadId" => response.headers["x-amz-multipart-upload-id"]}
+          body = Map.put(body, "uploadId", response.headers["x-amz-multipart-upload-id"])
         end
         {:ok, body, response}
       result ->
@@ -748,7 +748,7 @@ defmodule AWS.Glacier do
     case request(client, :post, url, headers, input, options, 201) do
       {:ok, body, response} ->
         if !is_nil(response.headers["x-amz-lock-id"]) do
-          body = %{body | "lockId" => response.headers["x-amz-lock-id"]}
+          body = Map.put(body, "lockId", response.headers["x-amz-lock-id"])
         end
         {:ok, body, response}
       result ->
@@ -944,7 +944,7 @@ defmodule AWS.Glacier do
     case request(client, :post, url, headers, input, options, 201) do
       {:ok, body, response} ->
         if !is_nil(response.headers["x-amz-capacity-id"]) do
-          body = %{body | "capacityId" => response.headers["x-amz-capacity-id"]}
+          body = Map.put(body, "capacityId", response.headers["x-amz-capacity-id"])
         end
         {:ok, body, response}
       result ->
@@ -1101,13 +1101,13 @@ defmodule AWS.Glacier do
     case request(client, :post, url, headers, input, options, 201) do
       {:ok, body, response} ->
         if !is_nil(response.headers["x-amz-archive-id"]) do
-          body = %{body | "archiveId" => response.headers["x-amz-archive-id"]}
+          body = Map.put(body, "archiveId", response.headers["x-amz-archive-id"])
         end
         if !is_nil(response.headers["x-amz-sha256-tree-hash"]) do
-          body = %{body | "checksum" => response.headers["x-amz-sha256-tree-hash"]}
+          body = Map.put(body, "checksum", response.headers["x-amz-sha256-tree-hash"])
         end
         if !is_nil(response.headers["Location"]) do
-          body = %{body | "location" => response.headers["Location"]}
+          body = Map.put(body, "location", response.headers["Location"])
         end
         {:ok, body, response}
       result ->
@@ -1180,7 +1180,7 @@ defmodule AWS.Glacier do
     case request(client, :put, url, headers, input, options, 204) do
       {:ok, body, response} ->
         if !is_nil(response.headers["x-amz-sha256-tree-hash"]) do
-          body = %{body | "checksum" => response.headers["x-amz-sha256-tree-hash"]}
+          body = Map.put(body, "checksum", response.headers["x-amz-sha256-tree-hash"])
         end
         {:ok, body, response}
       result ->
@@ -1199,6 +1199,7 @@ defmodule AWS.Glacier do
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
     case perform_request(method, url, payload, headers, options, success_status_code) do
       {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      {:ok, body, resp} -> {:ok, body, %{resp | headers: resp.headers |> Map.new}}
       other -> other
     end
   end

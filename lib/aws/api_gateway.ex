@@ -553,10 +553,10 @@ defmodule AWS.APIGateway do
     case request(client, :get, url, headers, nil, options, 200) do
       {:ok, body, response} ->
         if !is_nil(response.headers["Content-Disposition"]) do
-          body = %{body | "contentDisposition" => response.headers["Content-Disposition"]}
+          body = Map.put(body, "contentDisposition", response.headers["Content-Disposition"])
         end
         if !is_nil(response.headers["Content-Type"]) do
-          body = %{body | "contentType" => response.headers["Content-Type"]}
+          body = Map.put(body, "contentType", response.headers["Content-Type"])
         end
         {:ok, body, response}
       result ->
@@ -713,10 +713,10 @@ defmodule AWS.APIGateway do
     case request(client, :get, url, headers, nil, options, 200) do
       {:ok, body, response} ->
         if !is_nil(response.headers["Content-Disposition"]) do
-          body = %{body | "contentDisposition" => response.headers["Content-Disposition"]}
+          body = Map.put(body, "contentDisposition", response.headers["Content-Disposition"])
         end
         if !is_nil(response.headers["Content-Type"]) do
-          body = %{body | "contentType" => response.headers["Content-Type"]}
+          body = Map.put(body, "contentType", response.headers["Content-Type"])
         end
         {:ok, body, response}
       result ->
@@ -1176,6 +1176,7 @@ defmodule AWS.APIGateway do
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
     case perform_request(method, url, payload, headers, options, success_status_code) do
       {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      {:ok, body, resp} -> {:ok, body, %{resp | headers: resp.headers |> Map.new}}
       other -> other
     end
   end

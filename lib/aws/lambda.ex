@@ -316,13 +316,13 @@ defmodule AWS.Lambda do
     case request(client, :post, url, headers, input, options, nil) do
       {:ok, body, response} ->
         if !is_nil(response.headers["X-Amz-Executed-Version"]) do
-          body = %{body | "ExecutedVersion" => response.headers["X-Amz-Executed-Version"]}
+          body = Map.put(body, "ExecutedVersion", response.headers["X-Amz-Executed-Version"])
         end
         if !is_nil(response.headers["X-Amz-Function-Error"]) do
-          body = %{body | "FunctionError" => response.headers["X-Amz-Function-Error"]}
+          body = Map.put(body, "FunctionError", response.headers["X-Amz-Function-Error"])
         end
         if !is_nil(response.headers["X-Amz-Log-Result"]) do
-          body = %{body | "LogResult" => response.headers["X-Amz-Log-Result"]}
+          body = Map.put(body, "LogResult", response.headers["X-Amz-Log-Result"])
         end
         {:ok, body, response}
       result ->
@@ -586,6 +586,7 @@ defmodule AWS.Lambda do
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
     case perform_request(method, url, payload, headers, options, success_status_code) do
       {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      {:ok, body, resp} -> {:ok, body, %{resp | headers: resp.headers |> Map.new}}
       other -> other
     end
   end

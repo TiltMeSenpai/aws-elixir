@@ -106,10 +106,10 @@ defmodule AWS.Polly do
     case request(client, :post, url, headers, input, options, 200) do
       {:ok, body, response} ->
         if !is_nil(response.headers["Content-Type"]) do
-          body = %{body | "ContentType" => response.headers["Content-Type"]}
+          body = Map.put(body, "ContentType", response.headers["Content-Type"])
         end
         if !is_nil(response.headers["x-amzn-RequestCharacters"]) do
-          body = %{body | "RequestCharacters" => response.headers["x-amzn-RequestCharacters"]}
+          body = Map.put(body, "RequestCharacters", response.headers["x-amzn-RequestCharacters"])
         end
         {:ok, body, response}
       result ->
@@ -128,6 +128,7 @@ defmodule AWS.Polly do
     headers = AWS.Request.sign_v4(client, method, url, headers, payload)
     case perform_request(method, url, payload, headers, options, success_status_code) do
       {:ok, resp} -> {:ok, %{resp | headers: resp.headers |> Map.new}}
+      {:ok, body, resp} -> {:ok, body, %{resp | headers: resp.headers |> Map.new}}
       other -> other
     end
   end
